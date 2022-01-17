@@ -1,19 +1,19 @@
 import { createStore } from 'redux'
-import { createAction } from '@reduxjs/toolkit'
+import { createAction, createReducer } from '@reduxjs/toolkit'
 
 const addTodo = createAction('ADD')
 const deleteTodo = createAction('DELETE')
 
-const reducer = (state = [], action) => {
-  switch (action.type) {
-    case addTodo.type:
-      return [...state, { text: action.payload, id: Date.now() }]
-    case deleteTodo.type:
-      return state.filter((todo) => todo.id !== action.payload)
-    default:
-      return state
-  }
-}
+// 이전처럼 새로운 state를 리턴할 수 있다. 만약 이 방법을 사용할때에는 무조건 return값이 있어야 된다.
+// 뿐만아니라 mutate를 사용 가능하다. 이땐 아무것도 return하지 않는다. (툴킷이 알아서 새로운 state를 리턴한다)
+const reducer = createReducer([], {
+  [addTodo]: (state, action) => {
+    state.push({ text: action.payload, id: Date.now() })
+  },
+  [deleteTodo]: (state, action) => {
+    return state.filter((todo) => todo.id !== action.payload)
+  },
+})
 
 const store = createStore(reducer)
 
