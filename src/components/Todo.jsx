@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { actionCreators } from '../store'
+import { remove } from '../store'
 
 function Todo({ text, id, deleteTodo }) {
   return (
@@ -15,7 +15,7 @@ function Todo({ text, id, deleteTodo }) {
 // ownProps에는 받아오는 text, id값이 들어가 있다.
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    deleteTodo: () => dispatch(actionCreators.deleteTodo(ownProps.id)),
+    deleteTodo: () => dispatch(remove(ownProps.id)),
   }
 }
 
